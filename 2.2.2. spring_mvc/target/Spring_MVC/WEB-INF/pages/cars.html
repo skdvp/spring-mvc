@@ -4,18 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        table th, table td {
+            padding: 30px;
+        }
+
+    </style>
 </head>
 <body>
-<div>
+<h4>Response to request</h4>
 
+    <table border="3">
+        <tr>
+            <th>Car Model</th>
+            <th>Brand</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="car : ${carsKey}"
+            class="car" th:classappend>
 
-    <th:block th:each="c : ${carsKey}">
-        <h1 th:text="${c}"></h1>
-    </th:block>
+            <td th:utext="${car.getCarModel()}">Car Model</td>
+            <td th:utext="${car.getBrand()}">Brand</td>
+            <td th:utext="${car.getPrice()}">Email</td>
 
+        </tr>
 
+    </table>
 
-
-</div>
 </body>
 </html>
