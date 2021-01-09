@@ -3,23 +3,50 @@ package web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import web.model.Car;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+import web.service.CarServiceImpl;
 
 @Controller
 public class CarController {
-    @GetMapping(value = "/car")
-    public String addAndPrintCar(ModelMap model) {
-        List<Car> cars = new ArrayList<>();
-        cars.add(new Car("Q7","Audi",825000));
-        cars.add(new Car("X5","BMW",3000000));
-        cars.add(new Car("CX-5","Mazda",1500000));
-        cars.add(new Car("W205","Mercedes",2500000));
-        cars.add(new Car("LX III","Lexus",2900000));
-        model.addAttribute("cars", cars);
-        return "index";
+
+    private final CarServiceImpl carService = new CarServiceImpl();
+
+    @GetMapping(value = "/cars")
+    public String printSomeCars(@RequestParam(value = "count", required = false) Integer countVar, ModelMap model) {
+        model.addAttribute("carsKey", carService.printSomeCars(countVar));
+        return "cars";
     }
+
+/*
+    @GetMapping(value = "/cars?count=${countVar}")
+    public String printSomeCars(@PathVariable("countVar")int count, ModelMap model) {
+        model.addAttribute("cars", carService.printSomeCars(count));
+        return "cars";
+    }
+*/
+
+
+//    @GetMapping(value = "/cars")
+//    public String printAllCars(ModelMap model) {
+//        model.addAttribute("cars", carService.printSomeCars(5));
+//        return "cars";
+//    }
+
+
+
+/*
+    @GetMapping(value = "/cars?count=${x}")
+    public String printCar(@PathVariable("x") int x, ModelMap model) {
+        model.addAttribute("cars_count", carService.printSomeCars(x));
+        return "cars_count";
+    }
+*/
+
+//    @GetMapping(value = "cars/")
+//    public String printCar(Model model, @RequestParam("count") int count) {
+//        model.addAttribute("count", carService.printSomeCars(count));
+//        return "cars_count";
+//    }
+
 
 }
